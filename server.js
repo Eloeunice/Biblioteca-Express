@@ -1,15 +1,17 @@
 import express from "express"
-import ConectarBanco from "./dbconnect.js"
+import ConectarBanco from "./src/config/dbconnect.js"
+import router from "./src/routess/index.js"
 
 const app = express()
 const PORT = 3000
+app.use('/', router)
 
 app.get('/', (req, res) => {
   res.send('Requisição da Biblioteca!')
 })
 
 app.listen(PORT, () => {
-  console.log(`App de exemplo esta rodando na porta ${PORT}`)
+  console.log(`Biblioteca esta rodando na porta ${PORT}`)
 })
 
 const conexao = await ConectarBanco()

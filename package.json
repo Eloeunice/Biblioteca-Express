@@ -2,6 +2,7 @@
   "name": "biblioteca",
   "version": "1.0.0",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon biblioteca/server.js"
@@ -16,4 +17,5 @@
     "mongoose": "^8.12.0",
     "nodemon": "^3.1.9"
   }
+
 }
