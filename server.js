@@ -1,6 +1,6 @@
 import express from "express"
 import ConectarBanco from "./src/config/dbconnect.js"
-import router from "./src/routess/index.js"
+import router from "./src/routes/index.js"
 
 const app = express()
 const PORT = 3000
