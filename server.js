@@ -3,8 +3,11 @@ import ConectarBanco from "./src/config/dbconnect.js"
 import router from "./src/routes/index.js"
 
 const app = express()
+app.use(express.json())
+
 const PORT = 3000
 app.use('/', router)
+
 
 app.get('/', (req, res) => {
   res.send('Requisição da Biblioteca!')

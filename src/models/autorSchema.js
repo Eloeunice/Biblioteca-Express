@@ -2,10 +2,11 @@ import mongoose, { Schema } from "mongoose" // desestruturação para importar p
 
 
 const AutorSchema = new mongoose.Schema({
-    nome: {String, required: true},
-    anoNascimento:{Date},
-    nacionalidade: {String},
+    id: {type: mongoose.Schema.Types.ObjectId},
+    nome: {type: String, required: true},
+    anoNascimento:{type: Date},
+    nacionalidade: {type: String},
 })
 
-
-export default mongoose.model('Autores', AutorSchema)
+const Autores = mongoose.model('Autores', AutorSchema)
+export default Autores

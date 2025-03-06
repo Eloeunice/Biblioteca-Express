@@ -2,11 +2,11 @@ import mongoose, { Schema } from "mongoose" // desestruturação para importar p
 
 
 const LivroSchema = new mongoose.Schema({
-    titulo: {String, required: true},
+    titulo: {type: String, required: true},
     autor:{type: mongoose.Schema.Types.ObjectId, ref: "Autores", required: true},
-    categoria: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Categorias"},
-    numeroPaginas: {Number},
+    categoria: {type: mongoose.Schema.Types.ObjectId, ref: "Categorias"},
+    numeroPaginas: {type: Number},
 })
 
-
-export default mongoose.model('Livros', LivroSchema)
+const Livros = mongoose.model("Livros", LivroSchema)
+export default Livros
