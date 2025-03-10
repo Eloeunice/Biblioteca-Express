@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose" // desestruturação para importar p
 
 
 const LivroSchema = new mongoose.Schema({
-    titulo: {type: String, required: true},
+    titulo: {type: String, required: true, unique: true},
     autor:{type: mongoose.Schema.Types.ObjectId, ref: "Autores", required: true},
     categoria: {type: mongoose.Schema.Types.ObjectId, ref: "Categorias"},
     numeroPaginas: {type: Number},

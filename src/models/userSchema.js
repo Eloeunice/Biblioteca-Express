@@ -2,10 +2,10 @@ import mongoose, { Schema } from "mongoose" // desestruturação para importar p
 
 
 const UserSchema = new mongoose.Schema({
-    nome: {String, required: true},
-    email:{String, required: true, unique: true},
-    senha: {String, required: true},
+    nome: {type: String, required: true},
+    email:{type: String, required: true, unique: true},
+    senha: {type: String, required: true},
 }, {timestamps: true})
 
-
-export default mongoose.model('Users', UserSchema)
+const Users = mongoose.model('Users', UserSchema)
+export default Users
