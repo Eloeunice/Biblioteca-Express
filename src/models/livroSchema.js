@@ -1,4 +1,6 @@
-import mongoose, { Schema } from "mongoose" // desestruturação para importar partes especificas de um módulo
+import mongoose, { Schema } from "mongoose" 
+import { ObjectId } from "mongodb"// desestruturação para importar partes especificas de um módulo
+import { z } from "zod"
 
 
 const LivroSchema = new mongoose.Schema({
@@ -10,3 +12,11 @@ const LivroSchema = new mongoose.Schema({
 
 const Livros = mongoose.model("Livros", LivroSchema)
 export default Livros
+
+
+export const livroModeloSchema = z.object({
+    titulo: z.string(),
+    autor:  z.instanceof(ObjectId),
+    categoria: z.instanceof(ObjectId),
+    numeroPaginas: z.number()
+})

@@ -3,6 +3,7 @@ import express from "express"
 import ConectarBanco from "./src/config/dbconnect.js"
 import router from "./src/routes/index.js"
 import { MongooseError } from 'mongoose'
+import { ZodError } from 'zod'
 
 const app = express()
 app.use(express.json())
@@ -16,10 +17,24 @@ app.get('/', (req, res) => {
 })
 
 app.use((err, req, res, next) => {
-  if (err instanceof MongooseError) {
-    res.json({message: 'Ocorreu um erro no banco'})
+  if (err instanceof ZodError) {
+    const errorMessages = err.errors.map((issue) => ({
+      message: `${issue.path.join('.')} is ${issue.message}`,
+    }))
+    res.status(400).json({ error: 'Invalid data', details: errorMessages })
+    return;
+
   }
-  res.json({message: 'Ocorreu um erro, por favor tente novamente'})
+
+  if (err instanceof MongooseError) {
+    console.log(err)
+    res.json({ message: 'Ocorreu um erro no banco' })
+    return;
+
+  }
+
+  console.log(err)
+  res.json({ message: 'Ocorreu um erro, por favor tente novamente' })
 })
 
 app.listen(PORT, () => {
