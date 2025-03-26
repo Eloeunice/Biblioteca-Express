@@ -1,5 +1,5 @@
 import 'express-async-errors'
-import express from "express"
+import express, { json } from "express"
 import ConectarBanco from "./src/config/dbconnect.js"
 import router from "./src/routes/index.js"
 import { MongooseError } from 'mongoose'
@@ -7,6 +7,8 @@ import { ZodError } from 'zod'
 import passport from 'passport'
 import autenticateUser from './src/middlewares/passport.js'
 import jsonwebtoken from 'jsonwebtoken'
+import swaggerUI from "swagger-ui-express"
+import swaggerFile from "./swagger-output.json" with { type: "json" };
 
 
 const app = express()
@@ -42,9 +44,10 @@ app.use((err, req, res, next) => {
   console.log(err)
   res.json({ message: 'Ocorreu um erro, por favor tente novamente' })
 })
-
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerFile))
 app.listen(PORT, () => {
   console.log(`Biblioteca esta rodando na porta ${PORT}`)
+  console.log(`📄 Documentação: http://localhost:${PORT}/api-docs`)
 })
 
 const conexao = await ConectarBanco()
