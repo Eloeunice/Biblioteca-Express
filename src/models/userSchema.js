@@ -4,7 +4,7 @@ import mongoose, { Schema } from "mongoose" // desestruturação para importar p
 const UserSchema = new mongoose.Schema({
     nome: {type: String, required: true},
     email:{type: String, required: true, unique: true},
-    senha: {type: String, required: true},
+    password: {type: String, required: true},
 }, {timestamps: true})
 
 const Users = mongoose.model('Users', UserSchema)

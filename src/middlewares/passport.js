@@ -1,9 +1,10 @@
 // Middleware para fazer a autenticação dos tokens de usuário
-
 import passport from "passport"
 import { Strategy, ExtractJwt } from "passport-jwt"
 import dotenv from "dotenv"
-import Users from "../models/userSchema"
+import Users from "../models/userSchema.js"
+import { error } from "console"
+
 
 dotenv.config() // acessar minhas variaveis no env
 
@@ -13,16 +14,12 @@ dotenv.config() // acessar minhas variaveis no env
 const options = {
     secretOrKey: process.env.SECRET_KEY,
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
-}
+} // retira o token do cabeçalho da requisição
 
 // funcao que processa o token e verifica a autenticação
 const verify = async (jwt_payload, done) => {
-    const user = await Users.findOne(jwt_payload.id)
+    const user = await Users.findById(jwt_payload.id)
     // done is a passport error first callback accepting arguments done(error, user, info)
-
-    if (err) {
-        return done(err, false)
-    }
     if (user) {
         return done(null, user)
     }
@@ -31,7 +28,7 @@ const verify = async (jwt_payload, done) => {
     }
 }
 
-const Strategy = new Strategy(options, verify)
+const autenticateUser = new Strategy(options, verify)
 
-export default Strategy
+export default autenticateUser
 

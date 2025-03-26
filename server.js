@@ -4,13 +4,19 @@ import ConectarBanco from "./src/config/dbconnect.js"
 import router from "./src/routes/index.js"
 import { MongooseError } from 'mongoose'
 import { ZodError } from 'zod'
+import passport from 'passport'
+import autenticateUser from './src/middlewares/passport.js'
+import jsonwebtoken from 'jsonwebtoken'
+
 
 const app = express()
 app.use(express.json())
 
 const PORT = 3000
-app.use('/', router)
+passport.use(autenticateUser)
+app.use(passport.initialize()) // inicializa o passoort
 
+app.use('/', router)
 
 app.get('/', (req, res) => {
   res.send('Requisição da Biblioteca!')

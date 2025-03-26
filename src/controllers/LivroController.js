@@ -8,7 +8,20 @@ import livroRouters from "../routes/livro.js"
 
 // melhor usar o params quando a busca for por id
 
+export async function encontrarLivros(req,res){
+    const page = req.query.page || 0 // pego a pagina definida na url
+    const limit = req.query.limit // pego o limite de objetos definido dentro da url
 
+     // Preciso que cada pagina tenha a quantidade de limite 
+    const paginaAtual = page == 1 ? 0 : (page * limit) 
+    // buscar os livros de acordo com o limite informado
+    const livrosEncontrados = await Livros.find().skip(paginaAtual).limit(limit) // o problema é que ele só vai trazer livros dos limites
+   
+    console.log(livrosEncontrados)
+    
+    res.status(200).json({livrosEncontrados})
+
+}
 export async function criarLivro(req, res) {
     const novoLivro = req.body // recebe as informações passadas na requisição
     const novoLivroCriado = await Livros.create(novoLivro) // espera a criação do novo livro para armazenar na constante
