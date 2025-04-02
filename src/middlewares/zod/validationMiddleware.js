@@ -1,6 +1,7 @@
-import { z } from "zod"
-
+import { z } from 'zod'
 
 export function validateData(schema) {
-    return ((req, _, next) => { schema.parse(req.body), next() })
+  return (req, _, next) => {
+    schema.parse(req.body), next()
+  }
 }

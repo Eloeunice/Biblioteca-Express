@@ -1,15 +1,14 @@
 import 'express-async-errors'
-import express, { json } from "express"
-import ConectarBanco from "./src/config/dbconnect.js"
-import router from "./src/routes/index.js"
+import express, { json } from 'express'
+import ConectarBanco from './src/config/dbconnect.js'
+import router from './src/routes/index.js'
 import { MongooseError } from 'mongoose'
 import { ZodError } from 'zod'
 import passport from 'passport'
 import autenticateUser from './src/middlewares/passport.js'
 import jsonwebtoken from 'jsonwebtoken'
-import swaggerUI from "swagger-ui-express"
-import swaggerFile from "./swagger-output.json" with { type: "json" };
-
+import swaggerUI from 'swagger-ui-express'
+import swaggerFile from './swagger-output.json' with { type: 'json' }
 
 const app = express()
 app.use(express.json())
@@ -30,21 +29,19 @@ app.use((err, req, res, next) => {
       message: `${issue.path.join('.')} is ${issue.message}`,
     }))
     res.status(400).json({ error: 'Invalid data', details: errorMessages })
-    return;
-
+    return
   }
 
   if (err instanceof MongooseError) {
     console.log(err)
     res.json({ message: 'Ocorreu um erro no banco' })
-    return;
-
+    return
   }
 
   console.log(err)
   res.json({ message: 'Ocorreu um erro, por favor tente novamente' })
 })
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerFile))
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerFile))
 app.listen(PORT, () => {
   console.log(`Biblioteca esta rodando na porta ${PORT}`)
   console.log(`📄 Documentação: http://localhost:${PORT}/api-docs`)
@@ -53,6 +50,5 @@ app.listen(PORT, () => {
 const conexao = await ConectarBanco()
 conexao.on('open', () => console.log('Conexão aberta'))
 conexao.on('error', (error) => console.log(`Erro na conexão, ${error}`))
-
 
 export default app
