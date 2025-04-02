@@ -1,14 +1,14 @@
 import mongoose from 'mongoose'
 import Autores from '../models/autorSchema.js'
-import { error } from 'console'
+import { StatusCodes } from 'http-status-codes'
 
 export async function criarAutor(req, res) {
   try {
     const novoAutor = req.body // recebe as informações passadas na requisição
     await Autores.create(novoAutor)
-    res.status(200).json({ message: 'Autor Cadastrado' })
+    res.status(StatusCodes.OK).json({ message: 'Autor Cadastrado' })
   } catch (error) {
-    res.status(500).json({ message: `${error.message}` })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: `${error.message}` })
   }
 }
 
@@ -18,7 +18,7 @@ export async function buscarAutor(req, res) {
 
   console.log(autorEncontrado)
   res
-    .status(200)
+    .status(StatusCodes.OK)
     .json({ message: 'Autor encontrado', content: autorEncontrado })
 }
 
@@ -28,7 +28,7 @@ export async function buscarAutorporNome(req, res) {
 
   console.log(autorEncontrado)
   res
-    .status(200)
+    .status(StatusCodes.OK)
     .json({ message: 'Autor encontrado', content: autorEncontrado })
 }
 
@@ -41,12 +41,12 @@ export async function alterarAutorCompleto(req, res) {
   )
 
   console.log(autorAlterado)
-  res.status(200).json({ message: 'Autor alterado', content: autorAlterado })
+  res.status(StatusCodes.OK).json({ message: 'Autor alterado', content: autorAlterado })
 }
 
 export async function deletarAutor(req, res) {
   const { id } = req.body
   const autorDeletado = await Autores.findByIdAndDelete(id)
 
-  res.status(200).json({ message: 'Autor Deletado' })
+  res.status(StatusCodes.OK).json({ message: 'Autor Deletado' })
 }
